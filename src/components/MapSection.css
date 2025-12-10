@@ -1,0 +1,18 @@
+.map-image {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+
+  /* Initial state: hidden and moved down */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-out;
+}
+
+.map-image.visible {
+  /* Animate to visible */
+  opacity: 1;
+  transform: translateY(0);
+}
+

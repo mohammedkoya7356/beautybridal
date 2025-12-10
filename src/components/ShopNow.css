@@ -1,0 +1,26 @@
+.Main {
+  font-size: 3rem; /* adjust size */
+  font-weight: 700; /* bold */
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  /* gradient text effect */
+  background: linear-gradient(to bottom, #333333, #aaaaaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+}
+.shop-heading {
+    font-size: 3rem; /* adjust size */
+  font-weight: 700; /* bold */
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  /* gradient text effect */
+  background: linear-gradient(to bottom, #333333, #aaaaaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* for Firefox */
+  color: transparent;
+}

@@ -1,0 +1,16 @@
+.fw-bold{
+    font: 300;
+}
+/* Smooth transition for navbar */
+.nav-custom {
+  transition: all 0.3s ease;
+  padding: 1rem 0;
+  background-color: transparent;
+}
+
+/* Sticky style */
+.sticky-nav {
+  background-color: white; /* change if you want */
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
