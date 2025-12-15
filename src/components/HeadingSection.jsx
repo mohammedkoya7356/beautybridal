@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import illustrationImg from "../assets/Gemini_Generated_Image_vvg99uvvg99uvvg9_ss.png";
+
 import ScrollReveal from "scrollreveal";
 import "./HeadingSection.css";
 
@@ -44,11 +46,12 @@ const HeadingSection = () => {
         <div className="row align-items-center">
 
           <div className="col-md-6">
-            <img
-              src="/src/assets/Gemini_Generated_Image_vvg99uvvg99uvvg9 ss.png"
-              alt="Illustration"
-              className="img-fluid left-image rounded"
-            />
+           <img
+  src={illustrationImg}
+  alt="Illustration"
+  className="img-fluid left-image rounded"
+/>
+
           </div>
 
           <div className="col-md-6 mt-4 mt-md-0">

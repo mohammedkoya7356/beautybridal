@@ -1,4 +1,6 @@
 import React from "react";
+import navLogo from "../assets/Gemini_Generated_Image_ppimjdppimjdppim.png";
+
 import { Navbar, Nav as BSNav, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -17,12 +19,13 @@ const Nav = () => {
           className="d-flex align-items-center"
           style={{ gap: "10px" }}
         >
-          <img
-            src="/src/assets/Gemini_Generated_Image_ppimjdppimjdppim.png"
-            alt="Logo"
-            width="45"
-            height="45"
-          />
+         <img
+  src={navLogo}
+  alt="Logo"
+  width="45"
+  height="45"
+/>
+
           <span className="fw-bold">Beauty Bridal</span>
         </Navbar.Brand>
 

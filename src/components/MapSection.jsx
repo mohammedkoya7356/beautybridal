@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import shopImage from "../assets/shop1.jpeg";
+
 import ScrollReveal from "scrollreveal";
 import "./MapSection.css"; // optional if you want extra styling
 
@@ -83,16 +85,17 @@ const MapSection = () => {
               justifyContent: "center",
             }}
           >
-            <img
-              src="/src/assets/shop1.jpeg"
-              alt="Chemmad Beauty Bridal"
-              style={{
-                width: "70%",
-                maxWidth: "450px",
-                borderRadius: "15px",
-                boxShadow: "0 0 20px rgba(0,0,0,0.3)",
-              }}
-            />
+          <img
+  src={shopImage}
+  alt="Chemmad Beauty Bridal"
+  style={{
+    width: "70%",
+    maxWidth: "450px",
+    borderRadius: "15px",
+    boxShadow: "0 0 20px rgba(0,0,0,0.3)",
+  }}
+/>
+
           </div>
         </div>
       </div>
