@@ -1,7 +1,7 @@
 import "./App.css";
 import HeadingSection from "./components/HeadingSection";
 import Nav from "./components/Nav";
-import ShopNow from "./components/Shopnow";
+import ShopNow from "./components/ShopNow";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ThankYou from "./components/Thankyou";
 import BookingPage from "./components/BookingPage";
