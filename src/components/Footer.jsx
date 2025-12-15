@@ -1,4 +1,7 @@
+
 import React, { useEffect } from "react";
+import footerLogo from "../assets/Gemini_Generated_Image_ppimjdppimjdppim.png";
+
 import "./Footer.css";
 import {
   FaFacebookF,
@@ -26,16 +29,16 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <div className="footer-content">
+{/* LOGO SECTION */}
+<div className="footer-section footer-logo-section">
+  <img
+    src={footerLogo}
+    alt="Beauty Bridal Logo"
+    className="footer-logo"
+  />
+  <h3>Beauty Bridal</h3>
+</div>
 
-        {/* LOGO SECTION */}
-        <div className="footer-section footer-logo-section">
-          <img
-            src="/src/assets/Gemini_Generated_Image_ppimjdppimjdppim.png"
-            alt="Beauty Bridal Logo"
-            className="footer-logo"
-          />
-          <h3>Beauty Bridal</h3>
-        </div>
 
         {/* CONTACT US */}
         <div className="footer-section">
