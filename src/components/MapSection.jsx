@@ -84,11 +84,11 @@ const MapSection = () => {
             }}
           >
             <img
-              src="/src/assets/Gemini_Generated_Image_vvg99uvvg99uvvg9-removebg-preview.png"
+              src="/src/assets/shop1.jpeg"
               alt="Chemmad Beauty Bridal"
               style={{
-                width: "100%",
-                maxWidth: "420px",
+                width: "70%",
+                maxWidth: "450px",
                 borderRadius: "15px",
                 boxShadow: "0 0 20px rgba(0,0,0,0.3)",
               }}

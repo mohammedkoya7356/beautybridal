@@ -1,12 +1,22 @@
 import React from "react";
 import { Navbar, Nav as BSNav, Container } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Nav = () => {
   return (
-    <Navbar expand="lg" bg="white" className="shadow-sm">
+    <Navbar
+      expand="lg"
+      bg="white"
+      fixed="top"
+      className="shadow-sm py-2"
+    >
       <Container>
-        <Navbar.Brand href="/" className="d-flex align-items-center" style={{ gap: "10px" }}>
+        {/* Brand */}
+        <Navbar.Brand
+          href="#home"
+          className="d-flex align-items-center"
+          style={{ gap: "10px" }}
+        >
           <img
             src="/src/assets/Gemini_Generated_Image_ppimjdppimjdppim.png"
             alt="Logo"
@@ -15,13 +25,14 @@ const Nav = () => {
           />
           <span className="fw-bold">Beauty Bridal</span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <BSNav className="ms-auto">
-            <BSNav.Link href="/">Home</BSNav.Link>
-            <BSNav.Link href="/about">About</BSNav.Link>
-            <BSNav.Link href="/gallery">Gallery</BSNav.Link>
-            <BSNav.Link href="/contact">Contact</BSNav.Link>
+
+        <Navbar.Toggle aria-controls="main-navbar" />
+        <Navbar.Collapse id="main-navbar">
+          <BSNav className="ms-auto gap-3">
+            <BSNav.Link href="#home">Home</BSNav.Link>
+            <BSNav.Link href="#bookings">Bookings</BSNav.Link>
+            <BSNav.Link href="#shop">Our Shop</BSNav.Link>
+            <BSNav.Link href="#contact">Contact</BSNav.Link>
           </BSNav>
         </Navbar.Collapse>
       </Container>
@@ -30,4 +41,3 @@ const Nav = () => {
 };
 
 export default Nav;
-

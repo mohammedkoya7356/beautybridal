@@ -8,11 +8,13 @@ export const getBookCards = async (req, res) => {
     const cards = await BookCard.find();
     res.json(cards);
   } catch (err) {
+    console.log("❌ GET ALL CARDS ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
 
-// ---------------- CREATE ----------------
+
+// ---------------- CREATE ---------------
 export const createBookCard = async (req, res) => {
   try {
     const imageUrl = await uploadToCloudinary(req.file.buffer);

@@ -1,72 +1,153 @@
+/* Page wrapper */
 .booking-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #620a0a, #deeaec);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  background: linear-gradient(135deg, #2b0f2b, #3a143a);
+  padding: 20px;
 }
 
+/* Card */
 .booking-card {
-  background-color: #2b1529;
-  padding: 40px;
-  border-radius: 16px;
-  max-width: 400px;
-  width: 100%;
+  background: #2a0d2a;
   color: #fff;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 🔥 SELECTED PRODUCT IMAGE FIX */
+.selected-product {
   text-align: center;
-}
-
-.booking-title {
-  font-size: 1.3rem;
-  margin-bottom: 30px;
-  line-height: 1.4;
-}
-
-.booking-title span {
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.booking-group {
-  display: flex;
-  align-items: center;
   margin-bottom: 20px;
 }
 
-.booking-step {
-  background-color: #6b214e;
-  color: #fff;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  flex-shrink: 0;
+.selected-product img {
+  width: 100%;
+  max-height: 220px;   /* ✅ medium size */
+  object-fit: cover;  /* ✅ prevents stretching */
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 
+/* Product title */
+.selected-product h4 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+/* Product price */
+.selected-product p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* Form groups */
+.booking-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Step circle */
+.booking-step {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #b12b8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+/* Inputs */
 .booking-group input {
   flex: 1;
-  padding: 10px 15px;
-  border-radius: 25px;
   border: none;
   outline: none;
+  padding: 10px 14px;
+  border-radius: 20px;
 }
 
+/* Submit button */
 .booking-btn {
-  background-color: #6b214e;
+  width: 100%;
+  padding: 12px;
+  background: #000;
   color: #fff;
   border: none;
-  padding: 10px 25px;
   border-radius: 25px;
+  margin-top: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.booking-btn:hover {
-  background-color: #50163a;
+/* 📱 MOBILE ADJUSTMENT */
+@media (max-width: 768px) {
+  .selected-product img {
+    max-height: 180px;
+  }
+}
+/* Main layout */
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 50px;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* LEFT SIDE */
+.booking-info {
+  color: #fff;
+      padding-right: 100px;
+}
+
+
+/* RIGHT CARD (existing styles stay) */
+.booking-card {
+  background: #2a0d2a;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Product image */
+.selected-product img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-info {
+    text-align: center;
+  }
+
+  .info-list {
+    text-align: left;
+  }
+}
+.info-list {
+  padding-left: 22px;
+  margin-top: 20px;
+}
+
+.info-list li {
+  margin-bottom: 20px;   /* ✅ space between points */
+  font-size: 19px;
+  line-height: 1.7;
+}
+.info-list li:last-child {
+  margin-bottom: 0;
 }

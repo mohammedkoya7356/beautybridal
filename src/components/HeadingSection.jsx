@@ -1,44 +1,64 @@
-import React, { useEffect } from 'react';
-import ScrollReveal from 'scrollreveal';
+import React, { useEffect, useState } from "react";
+import ScrollReveal from "scrollreveal";
+import "./HeadingSection.css";
+
+const texts = [
+  "Your Happiness Is Our Greatest Achievement",
+  "നിങ്ങളുടെ സന്തോഷമാണ് ഞങ്ങളുടെ ഏറ്റവും വലിയ നേട്ടം."
+];
 
 const HeadingSection = () => {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const sr = ScrollReveal({
-      distance: '60px',
+      distance: "60px",
       duration: 2500,
-      delay: 400,
-      easing: 'ease',
+      easing: "ease",
+      reset: false,
     });
 
-    sr.reveal('.heading', { origin: 'top', delay: 200 });
-    sr.reveal('.subheading', { origin: 'left', delay: 400 });
-    sr.reveal('.left-image', { origin: 'left', delay: 300 }); // 👈 image animation
+    sr.reveal(".heading", { origin: "top", delay: 200 });
+    sr.reveal(".subheading", { origin: "left", delay: 400 });
+    sr.reveal(".left-image", { origin: "left", delay: 300 });
+
+    const interval = setInterval(() => {
+      setVisible(false); // fade out
+
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % texts.length);
+        setVisible(true); // fade in
+      }, 1200); // slow fade duration
+    }, 5000); // text visible time
+
+    return () => {
+      clearInterval(interval);
+      sr.destroy();
+    };
   }, []);
 
   return (
-    <section style={{ backgroundColor: 'maroon', color: 'white', padding: '60px 0' }}>
+    <section style={{ backgroundColor: "maroon", color: "white", padding: "60px 0" }}>
       <div className="container">
         <div className="row align-items-center">
-          {/* Left image */}
-          <div className="col-md-6 text-center text-md-start">
+
+          <div className="col-md-6">
             <img
-              src="/src/assets/Gemini_Generated_Image_vvg99uvvg99uvvg9 ss.png" // replace with your image
-              alt="My illustrative"
-              className="img-fluid left-image"
-              style={{ borderRadius: '10px' }}
+              src="/src/assets/Gemini_Generated_Image_vvg99uvvg99uvvg9 ss.png"
+              alt="Illustration"
+              className="img-fluid left-image rounded"
             />
           </div>
 
-          {/* Right text */}
-          <div className="col-md-6 text-center text-md-start mt-4 mt-md-0">
-            <h2 className="heading fw-bold" style={{ fontSize: '2rem' }}>
-              This is the Main Heading life is the bottom is scrare its  public reacction  so its made world its longest way is find out the managers low way in longest way in purpose the low interstand the national look hope the powerful way the pphasde in our hand when the scabable for enhangments and idea about the lowest way is bower make it hoeeible the national peaple the middle way so hard nature how it could possible its the longest purpose made its horrible
-            </h2>
-            <p className="subheading mt-3" style={{ fontSize: '1.2rem' }}>
-              This is the Subheading with ScrollReveal animation.
+          <div className="col-md-6 mt-4 mt-md-0">
+            <h2 className="heading fw-bold">Trusted Wedding Rentals</h2>
+
+            <p className={`subheading transition-text ${visible ? "show" : "hide"}`}>
+              {texts[index]}
             </p>
           </div>
+
         </div>
       </div>
     </section>
@@ -46,4 +66,3 @@ const HeadingSection = () => {
 };
 
 export default HeadingSection;
-

@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #fa556b, #96c93d);
+  background: linear-gradient(135deg, #2d0409, #0f0850);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 20px;
 }
@@ -39,7 +39,7 @@
 .back-home {
   display: inline-block;
   padding: 12px 25px;
-  background: #00b09b;
+  background: #ff5757;
   color: #fff;
   text-decoration: none;
   border-radius: 8px;
