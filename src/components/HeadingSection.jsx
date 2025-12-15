@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import illustrationImg from "../assets/Gemini_Generated_Image_vvg99uvvg99uvvg9_ss.png";
-
+import illustrationImg from "../assets/weddingimage.png";
 import ScrollReveal from "scrollreveal";
 import "./HeadingSection.css";
 
