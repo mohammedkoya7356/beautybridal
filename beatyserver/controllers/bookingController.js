@@ -4,12 +4,12 @@ import nodemailer from "nodemailer";
 // ---------------- CREATE BOOKING + SEND EMAIL ----------------
 export const createBooking = async (req, res) => {
   try {
-    console.log("REQ BODY:", req.body);
+    console.log("BOOKING BODY:", req.body);
 
-    // Save booking
+    // 1️⃣ Save booking
     const booking = await Booking.create(req.body);
 
-    // Email transporter
+    // 2️⃣ Setup email transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -18,7 +18,7 @@ export const createBooking = async (req, res) => {
       },
     });
 
-    // Email content
+    // 3️⃣ Email content
     const mailOptions = {
       from: `"Beauty Bridal Booking" <${process.env.ADMIN_EMAIL}>`,
       to: process.env.ADMIN_EMAIL,
@@ -31,13 +31,16 @@ export const createBooking = async (req, res) => {
         <p><b>Phone:</b> ${booking.phone}</p>
         <p><b>Address:</b> ${booking.address}</p>
         <p><b>Date:</b> ${booking.date}</p>
-        <p><b>Booked At:</b> ${new Date(booking.createdAt).toLocaleString()}</p>
+        <p><b>Booked At:</b> ${new Date(
+          booking.createdAt
+        ).toLocaleString()}</p>
       `,
     };
 
-    // Send email
+    // 4️⃣ Send email
     await transporter.sendMail(mailOptions);
 
+    // 5️⃣ Send success response
     res.status(201).json({
       success: true,
       message: "Booking created and email sent",
@@ -45,13 +48,15 @@ export const createBooking = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("BOOKING / EMAIL ERROR:", error);
+    console.error("BOOKING ERROR:", error);
     res.status(500).json({
-      message: "Error creating booking",
-      error: error.message,
+      success: false,
+      message: error.message,
     });
   }
-};  //dlete booking
+};
+
+// ---------------- DELETE BOOKING ----------------
 export const deleteBooking = async (req, res) => {
   try {
     await Booking.findByIdAndDelete(req.params.id);
