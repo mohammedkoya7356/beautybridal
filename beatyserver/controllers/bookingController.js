@@ -1,21 +1,19 @@
 import Booking from "../models/bookingModel.js";
 import nodemailer from "nodemailer";
 
-// ---------------- CREATE BOOKING (FAST) ----------------
+// ---------------- CREATE BOOKING (FAST + SIMPLE EMAIL) ----------------
 export const createBooking = async (req, res) => {
   try {
-    console.log("BOOKING BODY:", req.body);
-
     // 1️⃣ Save booking
     const booking = await Booking.create(req.body);
 
-    // 2️⃣ Respond immediately (FAST UX)
+    // 2️⃣ Respond immediately (FAST)
     res.status(201).json({
       success: true,
       booking,
     });
 
-    // 3️⃣ Send email in background (NON-BLOCKING)
+    // 3️⃣ Send SIMPLE admin notification email (NON-BLOCKING)
     setImmediate(async () => {
       try {
         const transporter = nodemailer.createTransport({
@@ -27,19 +25,16 @@ export const createBooking = async (req, res) => {
         });
 
         await transporter.sendMail({
-          from: `"Beauty Bridal Booking" <${process.env.ADMIN_EMAIL}>`,
+          from: `"Beauty Bridal" <${process.env.ADMIN_EMAIL}>`,
           to: process.env.ADMIN_EMAIL,
-          subject: "🛎️ New Booking Received",
+          subject: "📩 New Booking Submitted",
           html: `
-            <h2>New Booking Alert</h2>
-            <p><b>Name:</b> ${booking.name}</p>
-            <p><b>Phone:</b> ${booking.phone}</p>
-            <p><b>Address:</b> ${booking.address}</p>
-            <p><b>Date:</b> ${booking.date}</p>
+            <p><strong>New booking submitted.</strong></p>
+            <p>Please check the admin panel for details.</p>
           `,
         });
-      } catch (emailError) {
-        console.error("EMAIL FAILED (ignored):", emailError.message);
+      } catch (err) {
+        console.error("EMAIL FAILED (ignored):", err.message);
       }
     });
 
