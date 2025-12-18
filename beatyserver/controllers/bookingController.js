@@ -1,5 +1,4 @@
 import Booking from "../models/bookingModel.js";
-import axios from "axios";
 
 // ---------------- CREATE BOOKING (TELEGRAM → THEN RESPONSE) ----------------
 export const createBooking = async (req, res) => {
@@ -7,12 +6,16 @@ export const createBooking = async (req, res) => {
     // 1️⃣ Save booking
     const booking = await Booking.create(req.body);
 
-    // 2️⃣ Send Telegram notification
-    await axios.post(
+    // 2️⃣ Send Telegram notification (using fetch)
+    await fetch(
       `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
       {
-        chat_id: process.env.TELEGRAM_CHAT_ID,
-        text: "📩 New Booking Submitted",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: process.env.TELEGRAM_CHAT_ID,
+          text: "📩 New Booking Submitted",
+        }),
       }
     );
 
