@@ -25,7 +25,8 @@
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.2",
-    "scrollreveal": "^4.0.9"
+    "scrollreveal": "^4.0.9",
+    "twilio": "^5.10.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
