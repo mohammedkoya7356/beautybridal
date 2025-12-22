@@ -22,22 +22,26 @@ export const createBooking = async (req, res) => {
             user: process.env.ADMIN_EMAIL,
             pass: process.env.ADMIN_EMAIL_PASS,
           },
+          tls: {
+            rejectUnauthorized: false,
+          },
         });
 
         await transporter.sendMail({
           from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
           to: process.env.ADMIN_EMAIL,
-          subject: "📩 New Booking Submitted",
+          subject: "New Booking Submitted",
           text: "A new booking has been submitted. Please check the admin panel.",
         });
 
+        console.log("EMAIL SENT SUCCESSFULLY");
       } catch (emailError) {
-        console.error("EMAIL ERROR:", emailError.message);
+        console.error("EMAIL ERROR:", emailError);
       }
     });
 
   } catch (error) {
-    console.error("BOOKING ERROR:", error.message);
+    console.error("BOOKING ERROR:", error);
     res.status(500).json({
       success: false,
       message: error.message,
