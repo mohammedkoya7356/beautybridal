@@ -1,48 +1,50 @@
 import Booking from "../models/bookingModel.js";
 import nodemailer from "nodemailer";
 
-// ---------------- CREATE BOOKING (EMAIL FIRST → THEN RESPONSE) ----------------
+// ---------------- CREATE BOOKING (RESPOND FIRST → EMAIL LATER) ----------------
 export const createBooking = async (req, res) => {
   try {
     // 1️⃣ Save booking
     const booking = await Booking.create(req.body);
 
-    // 2️⃣ Create transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.ADMIN_EMAIL,
-        pass: process.env.ADMIN_EMAIL_PASS,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-
-    // 3️⃣ Send admin email FIRST
-    await transporter.sendMail({
-      from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
-      to: process.env.ADMIN_EMAIL,
-      subject: "New Booking Submitted",
-      text: "A new booking has been submitted. Please check the admin panel.",
-    });
-
-    console.log("EMAIL SENT SUCCESSFULLY");
-
-    // 4️⃣ Respond AFTER email success
+    // 2️⃣ Respond immediately (FAST)
     res.status(201).json({
       success: true,
       booking,
-      message: "Booking created and email sent successfully",
+    });
+
+    // 3️⃣ Send SIMPLE admin email (NON-BLOCKING)
+    setImmediate(async () => {
+      try {
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.ADMIN_EMAIL,
+            pass: process.env.ADMIN_EMAIL_PASS,
+          },
+          tls: {
+            rejectUnauthorized: false,
+          },
+        });
+
+        await transporter.sendMail({
+          from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
+          to: process.env.ADMIN_EMAIL,
+          subject: "New Booking Submitted",
+          text: "A new booking has been submitted. Please check the admin panel.",
+        });
+
+        console.log("EMAIL SENT SUCCESSFULLY");
+      } catch (emailError) {
+        console.error("EMAIL ERROR:", emailError);
+      }
     });
 
   } catch (error) {
-    console.error("BOOKING / EMAIL ERROR:", error);
-
+    console.error("BOOKING ERROR:", error);
     res.status(500).json({
       success: false,
-      message: "Booking failed or email not sent",
-      error: error.message,
+      message: error.message,
     });
   }
 };
