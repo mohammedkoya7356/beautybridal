@@ -19,18 +19,19 @@ export const createBooking = async (req, res) => {
     });
 
     // 3️⃣ Send email to ADMIN NOTIFICATION EMAIL
-    await transporter.sendMail({
-      from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
-      to: process.env.NOTIFY_EMAIL, // 👈 DIFFERENT EMAIL
-      subject: "🛎️ New Booking Submitted",
-      html: `
-        <h3>New Booking Received</h3>
-        <p><b>Name:</b> ${booking.name || "N/A"}</p>
-        <p><b>Phone:</b> ${booking.phone || "N/A"}</p>
-        <p><b>Date:</b> ${booking.date || "N/A"}</p>
-        <p>Please check the admin panel for full details.</p>
-      `,
-    });
+const notifyEmail =
+  process.env.NOTIFY_EMAIL || process.env.ADMIN_EMAIL;
+
+await transporter.sendMail({
+  from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
+  to: notifyEmail,
+  subject: "🛎️ New Booking Submitted",
+  html: `
+    <h3>New Booking Received</h3>
+    <p>Please check the admin panel for details.</p>
+  `,
+});
+
 
     console.log("EMAIL SENT SUCCESSFULLY");
 
