@@ -1,42 +1,40 @@
 import Booking from "../models/bookingModel.js";
 import nodemailer from "nodemailer";
 
-// ---------------- CREATE BOOKING (EMAIL FIRST → THEN RESPONSE) ----------------
+// ---------------- CREATE BOOKING (EMAIL NOTIFICATION) ----------------
 export const createBooking = async (req, res) => {
   try {
     // 1️⃣ Save booking
     const booking = await Booking.create(req.body);
 
-    // 2️⃣ Create SMTP transporter (RENDER SAFE)
+    // 2️⃣ SMTP transporter (Gmail)
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false, // TLS
       auth: {
-        user: process.env.ADMIN_EMAIL,
-        pass: process.env.ADMIN_EMAIL_PASS, // Gmail App Password
+        user: process.env.ADMIN_EMAIL,       // sender
+        pass: process.env.ADMIN_EMAIL_PASS,  // Gmail App Password
       },
     });
 
-    // 3️⃣ Verify transporter (important for debugging)
-    await transporter.verify();
-    console.log("SMTP READY");
-
-    // 4️⃣ Send admin email
+    // 3️⃣ Send email to ADMIN NOTIFICATION EMAIL
     await transporter.sendMail({
       from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
-      to: process.env.ADMIN_EMAIL,
-      subject: "New Booking Submitted",
+      to: process.env.NOTIFY_EMAIL, // 👈 DIFFERENT EMAIL
+      subject: "🛎️ New Booking Submitted",
       html: `
         <h3>New Booking Received</h3>
-        <p>A new booking has been submitted.</p>
-        <p>Please check the admin panel for details.</p>
+        <p><b>Name:</b> ${booking.name || "N/A"}</p>
+        <p><b>Phone:</b> ${booking.phone || "N/A"}</p>
+        <p><b>Date:</b> ${booking.date || "N/A"}</p>
+        <p>Please check the admin panel for full details.</p>
       `,
     });
 
     console.log("EMAIL SENT SUCCESSFULLY");
 
-    // 5️⃣ Respond to client
+    // 4️⃣ Respond to client
     res.status(201).json({
       success: true,
       booking,
