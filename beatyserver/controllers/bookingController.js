@@ -1,48 +1,44 @@
 import Booking from "../models/bookingModel.js";
 import nodemailer from "nodemailer";
 
-// ---------------- CREATE BOOKING (EMAIL NOTIFICATION) ----------------
+// ---------------- CREATE BOOKING (RESPOND FIRST → EMAIL LATER) ----------------
 export const createBooking = async (req, res) => {
   try {
-    // 1️⃣ Save booking
+    // 1️⃣ Save booking to DB
     const booking = await Booking.create(req.body);
 
-    // 2️⃣ SMTP transporter (Gmail)
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // TLS
-      auth: {
-        user: process.env.ADMIN_EMAIL,       // sender
-        pass: process.env.ADMIN_EMAIL_PASS,  // Gmail App Password
-      },
-    });
-
-    // 3️⃣ Send email to ADMIN NOTIFICATION EMAIL
-const notifyEmail =
-  process.env.NOTIFY_EMAIL || process.env.ADMIN_EMAIL;
-
-await transporter.sendMail({
-  from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
-  to: notifyEmail,
-  subject: "🛎️ New Booking Submitted",
-  html: `
-    <h3>New Booking Received</h3>
-    <p>Please check the admin panel for details.</p>
-  `,
-});
-
-
-    console.log("EMAIL SENT SUCCESSFULLY");
-
-    // 4️⃣ Respond to client
+    // 2️⃣ Respond immediately (FAST UI)
     res.status(201).json({
       success: true,
       booking,
     });
 
+    // 3️⃣ Send admin email (NON-BLOCKING)
+    setImmediate(async () => {
+      try {
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.ADMIN_EMAIL,
+            pass: process.env.ADMIN_EMAIL_PASS, // Gmail App Password
+          },
+        });
+
+        await transporter.sendMail({
+          from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
+          to: process.env.ADMIN_EMAIL,
+          subject: "New Booking Submitted",
+          text: "A new booking has been submitted. Please check the admin panel.",
+        });
+
+        console.log("EMAIL SENT SUCCESSFULLY");
+      } catch (emailError) {
+        console.error("EMAIL ERROR:", emailError.message);
+      }
+    });
+
   } catch (error) {
-    console.error("BOOKING / EMAIL ERROR:", error);
+    console.error("BOOKING ERROR:", error.message);
     res.status(500).json({
       success: false,
       message: error.message,
