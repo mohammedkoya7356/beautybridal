@@ -1,7 +1,6 @@
 import Booking from "../models/bookingModel.js";
-import nodemailer from "nodemailer";
 
-// ---------------- CREATE BOOKING (RESPOND FIRST → EMAIL LATER) ----------------
+// ---------------- CREATE BOOKING + TELEGRAM NOTIFY ----------------
 export const createBooking = async (req, res) => {
   try {
     // 1️⃣ Save booking to DB
@@ -13,27 +12,32 @@ export const createBooking = async (req, res) => {
       booking,
     });
 
-    // 3️⃣ Send admin email (NON-BLOCKING)
+    // 3️⃣ Telegram notification (NON-BLOCKING)
     setImmediate(async () => {
       try {
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.ADMIN_EMAIL,
-            pass: process.env.ADMIN_EMAIL_PASS, // Gmail App Password
-          },
-        });
+        await fetch(
+          `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: process.env.TELEGRAM_CHAT_ID,
+              text: `
+📩 NEW BOOKING RECEIVED
 
-        await transporter.sendMail({
-          from: `"Booking Alert" <${process.env.ADMIN_EMAIL}>`,
-          to: process.env.ADMIN_EMAIL,
-          subject: "New Booking Submitted",
-          text: "A new booking has been submitted. Please check the admin panel.",
-        });
+👤 Name: ${booking.name}
+📞 Phone: ${booking.phone}
+📅 Date: ${booking.date}
 
-        console.log("EMAIL SENT SUCCESSFULLY");
-      } catch (emailError) {
-        console.error("EMAIL ERROR:", emailError.message);
+Check admin panel for full details.
+              `,
+            }),
+          }
+        );
+
+        console.log("TELEGRAM NOTIFICATION SENT");
+      } catch (err) {
+        console.error("TELEGRAM ERROR:", err.message);
       }
     });
 
